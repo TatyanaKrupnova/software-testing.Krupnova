@@ -1,45 +1,49 @@
 package Project.addressbook.appmanager;
 
+import Project.addressbook.model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class ContactHelper {
-    FirefoxDriver wd;
+public class ContactHelper extends HelperBase{
 
     public ContactHelper(FirefoxDriver wd) {
-        this.wd = wd;
+        super(wd);
     }
 
-    public void enterContact() {
-        fillContactForm("Tatyana", "Krupnova", "Chelyabinsk", "9030883488", "1985");
-    }
-
-    public void fillContactForm(String name, String surname, String whereYouLive, String phonenumber, String Year) {
-        wd.findElement(By.name("firstname")).click();
-        wd.findElement(By.name("firstname")).clear();
-        wd.findElement(By.name("firstname")).sendKeys(name);
-        wd.findElement(By.name("lastname")).click();
-        wd.findElement(By.name("lastname")).clear();
-        wd.findElement(By.name("lastname")).sendKeys(surname);
-        wd.findElement(By.name("address")).click();
-        wd.findElement(By.name("address")).clear();
-        wd.findElement(By.name("address")).sendKeys(whereYouLive);
-        wd.findElement(By.name("mobile")).click();
-        wd.findElement(By.name("mobile")).clear();
-        wd.findElement(By.name("mobile")).sendKeys(phonenumber);
+    public void fillContactForm(ContactData contactData) {
+        type("firstname", contactData.getName());
+        type("lastname", contactData.getSurname());
+        type("address", contactData.getWhereYouLive());
+        type("mobile", contactData.getPhonenumber());
         if (!wd.findElement(By.xpath("//div[@id='content']/form/select[1]//option[21]")).isSelected()) {
-            wd.findElement(By.xpath("//div[@id='content']/form/select[1]//option[21]")).click();
+            click(By.xpath("//div[@id='content']/form/select[1]//option[21]"));
         }
         if (!wd.findElement(By.xpath("//div[@id='content']/form/select[2]//option[4]")).isSelected()) {
-            wd.findElement(By.xpath("//div[@id='content']/form/select[2]//option[4]")).click();
+            click(By.xpath("//div[@id='content']/form/select[2]//option[4]"));
         }
-        wd.findElement(By.name("byear")).click();
-        wd.findElement(By.name("byear")).clear();
-        wd.findElement(By.name("byear")).sendKeys(Year);
-        wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+        type("byear", contactData.getYear());
+        click(By.xpath("//div[@id='content']/form/input[21]"));
      }
 
+    private void type(String firstname, String name) {
+        click(By.name(firstname));
+        wd.findElement(By.name(firstname)).clear();
+        wd.findElement(By.name(firstname)).sendKeys(name);
+    }
+
     public void addNewContact() {
-        wd.findElement(By.linkText("add new")).click();
+        click(By.linkText("add new"));
+    }
+
+    //public void click(By add_new) {
+    //    wd.findElement(add_new).click();
+    //}
+
+    public void deleteSelectedContact() {
+        click(By.name("DeleteSel"));
+    }
+
+    public void selectContact() {
+        click(By.name("selected[]"));
     }
 }
