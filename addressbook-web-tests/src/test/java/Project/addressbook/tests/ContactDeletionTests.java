@@ -11,7 +11,7 @@ public class ContactDeletionTests extends TestBase {
         app.getContactHelper().click(By.linkText("home"));
         app.getContactHelper().selectContact();
         app.getContactHelper().click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
-        app.getContactHelper().deleteSelectedContact();
+        app.getContactHelper().closeAlert();
         app.getContactHelper().click(By.linkText("home"));
     }
 
