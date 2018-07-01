@@ -6,8 +6,9 @@ public class ContactData {
     private final String whereYouLive;
     private final String phonenumber;
     private final String year;
+    private String group;
 
-    public ContactData(String name, String surname, String whereYouLive, String phonenumber, String Year) {
+    public ContactData(String name, String surname, String whereYouLive, String phonenumber, String Year, String group) {
         this.name = name;
         this.surname = surname;
         this.whereYouLive = whereYouLive;
@@ -33,5 +34,9 @@ public class ContactData {
 
     public String getYear() {
         return year;
+    }
+
+    public String getGroup() {
+        return group;
     }
 }
