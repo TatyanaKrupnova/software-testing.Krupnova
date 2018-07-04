@@ -2,7 +2,6 @@ package Project.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class NavigatioHelper extends HelperBase{
 
@@ -23,7 +22,6 @@ public class NavigatioHelper extends HelperBase{
         if (isElementPresent(By.id("maintable"))) {
             return;
         }
-        click(By.linkText("home_page"));
-
+        click(By.linkText("home"));
     }
 }
