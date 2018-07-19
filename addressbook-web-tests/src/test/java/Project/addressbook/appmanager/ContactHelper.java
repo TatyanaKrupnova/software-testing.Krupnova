@@ -1,8 +1,13 @@
 package Project.addressbook.appmanager;
 
 import Project.addressbook.model.ContactData;
+import Project.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase{
 
@@ -39,15 +44,15 @@ public class ContactHelper extends HelperBase{
         click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void closeAlert () {
         wd.switchTo().alert().accept(); }
 
     public void initContactModification() {
-        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+        click(By.xpath("//table[@id='maintable']/tbody/tr/td[8]/a/img"));
     }
 
     public void submitContactModification() {
@@ -61,5 +66,22 @@ public class ContactHelper extends HelperBase{
 
     public boolean isThereaContact() {
        return isElementPresent(By.name("selected[]"));
+    }
+
+    public int getContactCount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
+        for (WebElement element : elements) {
+            int id = Integer.parseInt(element.findElement(By.xpath(".//td[@class='center']//input")).getAttribute("value"));
+            String name = element.findElement(By.xpath(".//td[3]")).getText();
+            String surname = element.findElement(By.xpath(".//td[2]")).getText();
+            ContactData contact = (new ContactData(id, name, surname, null, null, null, null));
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }
