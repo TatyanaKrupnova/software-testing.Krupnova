@@ -3,33 +3,14 @@ package Project.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-    private final String name;
-    private final String surname;
-    private final String whereYouLive;
-    private final String phonenumber;
-    private final String year;
-    private int id;
+    private String name;
+    private String surname;
+    private String Address;
+    private String phonenumber;
+    private String year;
+    private int id = Integer.MAX_VALUE;
     private String group;
 
-    public ContactData(int id, String name, String surname, String whereYouLive, String phonenumber, String Year, String group) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.whereYouLive = whereYouLive;
-        this.phonenumber = phonenumber;
-        this.group = group;
-        this.year = Year;
-    }
-
-    public ContactData(String name, String surname, String whereYouLive, String phonenumber, String year, String group) {
-        this.id = Integer.MAX_VALUE;
-        this.name = name;
-        this.surname = surname;
-        this.whereYouLive = whereYouLive;
-        this.phonenumber = phonenumber;
-        this.year = year;
-        this.group = group;
-    }
 
     public String getName() {
         return name;
@@ -39,8 +20,8 @@ public class ContactData {
         return surname;
     }
 
-    public String getWhereYouLive() {
-        return whereYouLive;
+    public String getAddress() {
+        return Address;
     }
 
     @Override
@@ -48,7 +29,7 @@ public class ContactData {
         return "ContactData{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", whereYouLive='" + whereYouLive + '\'' +
+                ", whereYouLive='" + Address + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", year='" + year + '\'' +
                 ", id=" + id +
@@ -86,7 +67,39 @@ public class ContactData {
         return id;
     }
 
-    public int setId(int id) {
-       return id;
+    public ContactData withId(int id) {
+        this.id = id;
+        return this;
     }
+
+    public ContactData withName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public ContactData withSurname(String surname) {
+        this.surname = surname;
+        return this;
+    }
+
+    public ContactData withAddress(String address) {
+        Address = address;
+        return this;
+    }
+
+    public ContactData withPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+        return this;
+    }
+
+    public ContactData withYear(String year) {
+        this.year = year;
+        return this;
+    }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
+
 }

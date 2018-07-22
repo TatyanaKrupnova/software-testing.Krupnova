@@ -2,35 +2,39 @@ package Project.addressbook.tests;
 
 import Project.addressbook.model.GroupData;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupModificationTests extends TestBase {
 
+    @BeforeMethod
+    public void ensurePreconditions() {
+        app.goTo().GroupPage();
+        if (app.group().list().size() == 0) {
+            app.group().create(new GroupData().withName("test"));
+        }
+
+    }
+
     @Test
     public void testGroupModification() {
-        app.getNavigatioHelper().gotoGroupPage();
-        if (! app.getGroupHelper().isThereaGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("group1", null, null));
-        }
-        List<GroupData> before = app.getGroupHelper().getGroupList();
-        app.getGroupHelper().selectGroup(before.size() - 1);
-        app.getGroupHelper().initGroupModification();
-        GroupData group = new GroupData(before.get(before.size() - 1).getId(),"group5", "logo1", "footer1");
-        app.getGroupHelper().fillGroupForm(group);
-        app.getGroupHelper().submitGroupModification();
-        app.getGroupHelper().returnToGroupPage();
-        List<GroupData> after = app.getGroupHelper().getGroupList();
+        List<GroupData> before = app.group().list();
+        int index  = before.size() - 1;
+        GroupData group = new GroupData().withId(before.get(index).getId()).withName("group5")
+                .withHeader("logo1").withFooter("footer1");
+        app.group().modify(index, group);
+        List<GroupData> after = app.group().list();
         Assert.assertEquals(after.size(),before.size());
 
-        before.remove(before.size() - 1);
+        before.remove(index);
         before.add(group);
         Comparator<? super GroupData> byId = Comparator.comparingInt(GroupData::getId);
         before.sort(byId);
         after.sort(byId);
         Assert.assertEquals(before,after);
     }
+
 }
